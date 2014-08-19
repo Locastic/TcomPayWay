@@ -3,7 +3,7 @@
     "type": "library",
     "description": "T-com PayWay library",
     "keyword": ["tcompayway", "tcom", "t-com", "payway", "pay way", "payment", "gateway"],
-    "homepage": "https://github.com/locastic/TcomPayWayPayum",
+    "homepage": "https://github.com/locastic/TcomPayWay",
     "license": "MIT",
     "authors": [
         {
