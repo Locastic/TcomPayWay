@@ -1,0 +1,29 @@
+{
+    "name": "locastic/tcompayway",
+    "type": "library",
+    "description": "T-com PayWay library",
+    "keyword": ["tcompayway", "tcom", "t-com", "payway", "pay way", "payment", "gateway"],
+    "homepage": "https://github.com/locastic/TcomPayWayPayum",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sandro Njegovan",
+            "email": "sandro@locastic.com"
+        },
+        {
+            "name": "Antonio Perić",
+            "email": "antonio@locastic.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.2"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "autoload": {
+        "psr-0": {
+            "Locastic\\TcomPayWay": "src/"
+        }
+    }
+}
