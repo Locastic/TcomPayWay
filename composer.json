@@ -7,6 +7,11 @@
     "license": "MIT",
     "authors": [
         {
+            "name": "locastic",
+            "homepage": "http://locastic.com",
+            "email": "info@locastic.com"
+        },
+        {
             "name": "Sandro Njegovan",
             "email": "sandro@locastic.com"
         },
