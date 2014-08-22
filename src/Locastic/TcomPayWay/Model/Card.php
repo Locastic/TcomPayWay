@@ -6,20 +6,31 @@ use Locastic\TcomPayWay\Helpers\CardHelper;
 
 class Card
 {
+    /**
+     * @var string
+     */
     private $_id;
+
+    /**
+     * @var string
+     */
     private $_number;
-    private $_expMonth;
-    private $_expYear;
+
+    /**
+     * @var \DateTime
+     */
     private $_expDate;
+
+    /**
+     * @var string
+     */
     private $_cvd;
 
-    function __construct($number, $expMonth, $expYear, $cvd)
+    function __construct($number, $expDate, $cvd)
     {
         $this->_id = null;
         $this->_number = $number;
-        $this->_expMonth = $expMonth;
-        $this->_expYear = $expYear;
-        $this->_expDate = null;
+        $this->_expDate = new \DateTime($expDate);
         $this->_cvd = $cvd;
     }
 
@@ -35,12 +46,11 @@ class Card
 
     public function getExpDate()
     {
-        return CardHelper::getExpDate($this->_expYear, $this->_expMonth);
+        return $this->_expDate->format('ym');
     }
 
     public function getCvd()
     {
         return $this->_cvd;
     }
-
 }

@@ -49,12 +49,4 @@ final class CardHelper
 
         return $id;
     }
-
-    public static function getExpDate($expYear, $expMonth)
-    {
-        $date = new \DateTime();
-        $date->setDate($expYear, $expMonth, 1);
-
-        return $date->format('ym');
-    }
 }
