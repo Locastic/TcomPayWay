@@ -26,11 +26,11 @@ class Card
      */
     private $_cvd;
 
-    function __construct($number, $expDate, $cvd)
+    function __construct($number, \DateTime $expDate, $cvd)
     {
         $this->_id = null;
         $this->_number = $number;
-        $this->_expDate = new \DateTime($expDate);
+        $this->_expDate = $expDate;
         $this->_cvd = $cvd;
     }
 
