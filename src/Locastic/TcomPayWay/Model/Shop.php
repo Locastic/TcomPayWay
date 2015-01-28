@@ -9,13 +9,12 @@ class Shop
     private $_password;
     private $_secretKey;
 
-//    function __construct($id, $username, $password, $secretKey)
-    function __construct()
+    function __construct($id, $username, $password, $secretKey)
     {
-        $this->_id = 10000006;
-        $this->_username = "test3d";
-        $this->_password = "test3d";
-        $this->_secretKey = "test3d";
+        $this->_id = $id;
+        $this->_username = $username;
+        $this->_password = $password;
+        $this->_secretKey = $secretKey;
     }
 
     public function getId()
