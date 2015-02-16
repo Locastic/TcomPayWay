@@ -46,11 +46,6 @@ class TcomPayWayPaymentProcessHandler
 
             $success = 'error';
 
-//            // samo za testiranje
-//            if ($authResponse['responseStatus'] or $transaction->getCard()->getNumber() == '6761121312868003') {
-//                $success = 'finished';
-//            }
-
             if ($authResponse['responseStatus']) {
                 $success = 'finished';
             }
