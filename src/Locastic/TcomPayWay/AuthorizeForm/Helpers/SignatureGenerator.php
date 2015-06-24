@@ -35,9 +35,7 @@ class SignatureGenerator
             $string .= $payment->getPgwAuthorizationToken().$secretKey;
         }
 
-        if ($payment->getPgwLanguage() != '') {
-            $string .= $payment->getPgwLanguage().$secretKey;
-        }
+        $string .= $payment->getPgwLanguage().$secretKey;
 
         if ($payment->getPgwReturnMethod() != '') {
             $string .= $payment->getPgwReturnMethod().$secretKey;
@@ -70,8 +68,8 @@ class SignatureGenerator
             $string .= $payment->getPgwCountry().$secretKey;
         }
 
-        if ($payment->getPgwTelephone() != '') {
-            $string .= $payment->getPgwTelephone().$secretKey;
+        if ($payment->getPgwPhoneNumber() != '') {
+            $string .= $payment->getPgwPhoneNumber().$secretKey;
         }
 
         if ($payment->getPgwEmail() != '') {
