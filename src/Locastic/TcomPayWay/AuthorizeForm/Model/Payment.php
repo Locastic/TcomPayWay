@@ -20,16 +20,30 @@ class Payment extends BasePayment implements PaymentInterface
     private $pgwDisableInstallments;
 
     /**
-     * @param string $pgwShopId
-     * @param string $secretKey
-     * @param string $pgwOrderId
-     * @param string $pgwAmount
-     * @param string $pgwAuthorizationType
-     * @param string $pgwSuccessUrl
-     * @param string $pgwFailureUrl
+     * @var boolean
      */
-    public function __construct($pgwShopId, $secretKey, $pgwOrderId, $pgwAmount, $pgwAuthorizationType, $pgwSuccessUrl, $pgwFailureUrl)
-    {
+    private $testMode;
+
+    /**
+     * @param string  $pgwShopId
+     * @param string  $secretKey
+     * @param string  $pgwOrderId
+     * @param string  $pgwAmount
+     * @param string  $pgwAuthorizationType
+     * @param string  $pgwSuccessUrl
+     * @param string  $pgwFailureUrl
+     * @param boolean $testMode
+     */
+    public function __construct(
+        $pgwShopId,
+        $secretKey,
+        $pgwOrderId,
+        $pgwAmount,
+        $pgwAuthorizationType,
+        $pgwSuccessUrl,
+        $pgwFailureUrl,
+        $testMode = true
+    ) {
         $this->pgwShopId = $pgwShopId;
         $this->secretKey = $secretKey;
         $this->pgwOrderId = $pgwOrderId;
@@ -37,6 +51,7 @@ class Payment extends BasePayment implements PaymentInterface
         $this->pgwAuthorizationType = $pgwAuthorizationType;
         $this->pgwSuccessUrl = $pgwSuccessUrl;
         $this->pgwFailureUrl = $pgwFailureUrl;
+        $this->testMode = $testMode;
     }
 
     /**
@@ -61,5 +76,17 @@ class Payment extends BasePayment implements PaymentInterface
     public function getPgwSignature()
     {
         return SignatureGenerator::getSignature($this->secretKey, $this);
+    }
+
+    /**
+     * @return string
+     */
+    public function getApiEndPoint()
+    {
+        if ($this->testMode) {
+            return 'https://pgwtest.ht.hr/services/payment/api/authorize-direct';
+        }
+
+        return 'https://pgw.ht.hr/services/payment/api/authorize-direct';
     }
 }
