@@ -72,7 +72,8 @@ class Payment extends BasePayment implements PaymentInterface
         $pgwCity,
         $pgwPostCode,
         $pgwCountry,
-        $pgwEmail
+        $pgwEmail,
+        $testMode = true
     ) {
         $this->pgwShopId = $pgwShopId;
         $this->secretKey = $secretKey;
@@ -91,6 +92,7 @@ class Payment extends BasePayment implements PaymentInterface
         $this->setPgwCity($pgwCity);
         $this->setPgwCountry($pgwCountry);
         $this->setPgwEmail($pgwEmail);
+        $this->testMode = $testMode;
     }
 
     /**
@@ -165,28 +167,55 @@ class Payment extends BasePayment implements PaymentInterface
         return SignatureGenerator::getSignature($this->secretKey, $this);
     }
 
+    /**
+     * @param string $pgwFirstName
+     */
     public function setPgwFirstName($pgwFirstName)
     {
         $this->pgwFirstName = MiscHelper::clearUTF($pgwFirstName);
     }
 
+    /**
+     * @param string $pgwLastName
+     */
     public function setPgwLastName($pgwLastName)
     {
         $this->pgwLastName = MiscHelper::clearUTF($pgwLastName);
     }
 
+    /**
+     * @param string $pgwStreet
+     */
     public function setPgwStreet($pgwStreet)
     {
         $this->pgwStreet = MiscHelper::clearUTF($pgwStreet);
     }
 
+    /**
+     * @param string $pgwCity
+     */
     public function setPgwCity($pgwCity)
     {
         $this->pgwCity = MiscHelper::clearUTF($pgwCity);
     }
 
+    /**
+     * @param string $pgwPostCode
+     */
     public function setPgwPostCode($pgwPostCode)
     {
         $this->pgwPostCode = MiscHelper::clearUTF($pgwPostCode);
+    }
+
+    /**
+     * @return string
+     */
+    public function getApiEndPoint()
+    {
+        if ($this->testMode) {
+            return 'https://pgwtest.ht.hr/services/payment/api/authorize-direct';
+        }
+
+        return 'https://pgw.ht.hr/services/payment/api/authorize-direct';
     }
 }

@@ -14,4 +14,9 @@ interface PaymentInterface
      * @return string
      */
     public function getPgwSignature();
+
+    /**
+     * @return string
+     */
+    public function getApiEndPoint();
 }

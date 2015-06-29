@@ -125,6 +125,11 @@ class Payment
     protected $pgwSignature;
 
     /**
+     * @var boolean
+     */
+    protected $testMode;
+
+    /**
      * @return string
      */
     public function getPgwOrderItems()

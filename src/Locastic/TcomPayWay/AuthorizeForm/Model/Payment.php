@@ -20,11 +20,6 @@ class Payment extends BasePayment implements PaymentInterface
     private $pgwDisableInstallments;
 
     /**
-     * @var boolean
-     */
-    private $testMode;
-
-    /**
      * @param string  $pgwShopId
      * @param string  $secretKey
      * @param string  $pgwOrderId
@@ -84,9 +79,9 @@ class Payment extends BasePayment implements PaymentInterface
     public function getApiEndPoint()
     {
         if ($this->testMode) {
-            return 'https://pgwtest.ht.hr/services/payment/api/authorize-direct';
+            return 'https://pgwtest.ht.hr/services/payment/api/authorize-form';
         }
 
-        return 'https://pgw.ht.hr/services/payment/api/authorize-direct';
+        return 'https://pgw.ht.hr/services/payment/api/authorize-form';
     }
 }
