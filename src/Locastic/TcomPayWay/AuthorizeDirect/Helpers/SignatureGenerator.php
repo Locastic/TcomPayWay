@@ -29,33 +29,16 @@ class SignatureGenerator
         $string .= $payment->getPgwShopId().$secretKey;
         $string .= $payment->getPgwOrderId().$secretKey;
         $string .= $payment->getPgwAmount().$secretKey;
-
-        if ($payment->getPgwInstallments() != '') {
-            $string .= $payment->getPgwInstallments().$secretKey;
-        }
-
+        $string .= $payment->getPgwInstallments().$secretKey;
         $string .= $payment->getPgwAuthorizationType().$secretKey;
-
-        if ($payment->getPgwAuthorizationToken() != '') {
-            $string .= $payment->getPgwAuthorizationToken().$secretKey;
-        }
-
+        $string .= $payment->getPgwAuthorizationToken().$secretKey;
         $string .= $payment->getPgwLanguage().$secretKey;
-
-        if ($payment->getPgwReturnMethod() != '') {
-            $string .= $payment->getPgwReturnMethod().$secretKey;
-        }
-
+        $string .= $payment->getPgwReturnMethod().$secretKey;
         $string .= $payment->getPgwSuccessUrl().$secretKey;
         $string .= $payment->getPgwFailureUrl().$secretKey;
-
         $string .= $payment->getPgwCardNumber().$secretKey;
         $string .= $payment->getPgwCardExpirationDate().$secretKey;
-
-        if ($payment->getPgwCardVerificationData()) {
-            $string .= $payment->getPgwCardVerificationData().$secretKey;
-        }
-
+        $string .= $payment->getPgwCardVerificationData().$secretKey;
         $string .= $payment->getPgwFirstName().$secretKey;
         $string .= $payment->getPgwLastName().$secretKey;
         $string .= $payment->getPgwStreet().$secretKey;
@@ -65,9 +48,7 @@ class SignatureGenerator
         $string .= $payment->getPgwPhoneNumber().$secretKey;
         $string .= $payment->getPgwEmail().$secretKey;
 
-        if ($payment->getPgwMerchantData() != '') {
-            $string .= $payment->getPgwMerchantData().$secretKey;
-        }
+        $string .= $payment->getPgwMerchantData().$secretKey;
 
         return hash('sha512', $string);
     }

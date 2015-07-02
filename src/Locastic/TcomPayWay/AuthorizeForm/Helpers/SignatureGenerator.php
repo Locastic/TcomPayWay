@@ -30,67 +30,23 @@ class SignatureGenerator
         $string .= $payment->getPgwOrderId().$secretKey;
         $string .= $payment->getPgwAmount().$secretKey;
         $string .= $payment->getPgwAuthorizationType().$secretKey;
-
-        if ($payment->getPgwAuthorizationToken() != '') {
-            $string .= $payment->getPgwAuthorizationToken().$secretKey;
-        }
-
+        $string .= $payment->getPgwAuthorizationToken().$secretKey;
         $string .= $payment->getPgwLanguage().$secretKey;
-
-        if ($payment->getPgwReturnMethod() != '') {
-            $string .= $payment->getPgwReturnMethod().$secretKey;
-        }
-
+        $string .= $payment->getPgwReturnMethod().$secretKey;
         $string .= $payment->getPgwSuccessUrl().$secretKey;
         $string .= $payment->getPgwFailureUrl().$secretKey;
-
-        if ($payment->getPgwFirstName() != '') {
-            $string .= $payment->getPgwFirstName().$secretKey;
-        }
-
-        if ($payment->getPgwLastName() != '') {
-            $string .= $payment->getPgwLastName().$secretKey;
-        }
-
-        if ($payment->getPgwStreet() != '') {
-            $string .= $payment->getPgwStreet().$secretKey;
-        }
-
-        if ($payment->getPgwCity() != '') {
-            $string .= $payment->getPgwCity().$secretKey;
-        }
-
-        if ($payment->getPgwPostCode() != '') {
-            $string .= $payment->getPgwPostCode().$secretKey;
-        }
-
-        if ($payment->getPgwCountry() != '') {
-            $string .= $payment->getPgwCountry().$secretKey;
-        }
-
-        if ($payment->getPgwPhoneNumber() != '') {
-            $string .= $payment->getPgwPhoneNumber().$secretKey;
-        }
-
-        if ($payment->getPgwEmail() != '') {
-            $string .= $payment->getPgwEmail().$secretKey;
-        }
-
-        if ($payment->getPgwmerchantData() != '') {
-            $string .= $payment->getPgwmerchantData().$secretKey;
-        }
-
-        if ($payment->getPgwOrderInfo() != '') {
-            $string .= $payment->getPgwOrderInfo().$secretKey;
-        }
-
-        if ($payment->getPgwOrderItems() != '') {
-            $string .= $payment->getPgwOrderItems().$secretKey;
-        }
-
-        if ($payment->getPgwDisableInstallments() != '') {
-            $string .= $payment->getPgwDisableInstallments().$secretKey;
-        }
+        $string .= $payment->getPgwFirstName().$secretKey;
+        $string .= $payment->getPgwLastName().$secretKey;
+        $string .= $payment->getPgwStreet().$secretKey;
+        $string .= $payment->getPgwCity().$secretKey;
+        $string .= $payment->getPgwPostCode().$secretKey;
+        $string .= $payment->getPgwCountry().$secretKey;
+        $string .= $payment->getPgwPhoneNumber().$secretKey;
+        $string .= $payment->getPgwEmail().$secretKey;
+        $string .= $payment->getPgwmerchantData().$secretKey;
+        $string .= $payment->getPgwOrderInfo().$secretKey;
+        $string .= $payment->getPgwOrderItems().$secretKey;
+        $string .= $payment->getPgwDisableInstallments().$secretKey;
 
         return hash('sha512', $string);
     }
