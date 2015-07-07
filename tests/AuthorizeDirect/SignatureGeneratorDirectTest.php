@@ -65,4 +65,45 @@ class SignatureGeneratorDirectTest extends PHPUnit_Framework_TestCase
             SignatureGenerator::getSignature('new-secret-key', $model)
         );
     }
+
+    /**
+     * Testing signature generator for success payment request
+     */
+    public function testPgwSuccessResponseSignatureGenerator()
+    {
+        $reponse = array(
+            'pgw_trace_ref' => '20000445-7572eef90f922e2529c2f813ba4edeaa-20150707112327024',
+            'pgw_transaction_id' => '6055',
+            'pgw_order_id' => '559b9a4c78d29',
+            'pgw_amount' => 123,
+            'pgw_installments' => 3,
+            'pgw_card_type_id' => 3,
+            'pgw_merchant_data' => '',
+            'pgw_signature' => '5f61773a2dca6d4a57797efc0171116ed608e7c5c78e9880bea5d9e8459efa2acf30360866b303c37b8ce63770a04a88ebfbd8b05a6814247667d75940e64a66',
+        );
+
+        $this->assertEquals(
+            '5f61773a2dca6d4a57797efc0171116ed608e7c5c78e9880bea5d9e8459efa2acf30360866b303c37b8ce63770a04a88ebfbd8b05a6814247667d75940e64a66',
+            SignatureGenerator::generatePaymentResponseSuccessSignature('new-secret-key', $reponse)
+        );
+    }
+
+    /**
+     * Testing signature generator for failed payment request
+     */
+    public function testPgwFailureResponseSignatureGenerator()
+    {
+        $reponse = array(
+            'pgw_result_code' => '1004',
+            'pgw_trace_ref' => '20000445-7572eef90f922e2529c2f813ba4edeaa-20150707112327024',
+            'pgw_order_id' => '559b9a4c78d29',
+            'pgw_merchant_data' => '',
+            'pgw_signature' => '5f61773a2dca6d4a57797efc0171116ed608e7c5c78e9880bea5d9e8459efa2acf30360866b303c37b8ce63770a04a88ebfbd8b05a6814247667d75940e64a66',
+        );
+
+        $this->assertEquals(
+            '8b42902e9e09218f032336d3ca041df8a650e0705cfee50798123a48203194e670ceb0247e45f106e9fb8324e9e501bbe749ccbe5aafebd903c2b85a50bb2d46',
+            SignatureGenerator::generatePaymentResponseFailureSignature('new-secret-key', $reponse)
+        );
+    }
 }

@@ -218,4 +218,28 @@ class Payment extends BasePayment implements PaymentInterface
 
         return 'https://pgw.ht.hr/services/payment/api/authorize-direct';
     }
+
+    /**
+     * @param array $pgwResponse
+     * @return bool
+     */
+    public function isPgwSuccessReponseValid($pgwResponse)
+    {
+        return $pgwResponse['pgw_signature'] == SignatureGenerator::generatePaymentResponseSuccessSignature(
+            $this->secretKey,
+            $pgwResponse
+        );
+    }
+
+    /**
+     * @param array $pgwResponse
+     * @return bool
+     */
+    public function isPgwFailedReponseValid($pgwResponse)
+    {
+        return $pgwResponse['pgw_signature'] == SignatureGenerator::generatePaymentResponseFailureSignature(
+            $this->secretKey,
+            $pgwResponse
+        );
+    }
 }

@@ -51,4 +51,41 @@ class SignatureGenerator
 
         return hash('sha512', $string);
     }
+
+    /**
+     * @param string $secretKey
+     * @param array  $pgwResponse
+     * @return string
+     */
+    public static function generatePaymentResponseSuccessSignature($secretKey, $pgwResponse)
+    {
+        $string = '';
+
+        $string .= $pgwResponse['pgw_trace_ref'].$secretKey;
+        $string .= $pgwResponse['pgw_transaction_id'].$secretKey;
+        $string .= $pgwResponse['pgw_order_id'].$secretKey;
+        $string .= $pgwResponse['pgw_amount'].$secretKey;
+        $string .= $pgwResponse['pgw_installments'].$secretKey;
+        $string .= $pgwResponse['pgw_card_type_id'].$secretKey;
+        $string .= $pgwResponse['pgw_merchant_data'].$secretKey;
+
+        return hash('sha512', $string);
+    }
+
+    /**
+     * @param string $secretKey
+     * @param array  $pgwResponse
+     * @return string
+     */
+    public static function generatePaymentResponseFailureSignature($secretKey, $pgwResponse)
+    {
+        $string = '';
+
+        $string .= $pgwResponse['pgw_result_code'].$secretKey;
+        $string .= $pgwResponse['pgw_trace_ref'].$secretKey;
+        $string .= $pgwResponse['pgw_order_id'].$secretKey;
+        $string .= $pgwResponse['pgw_merchant_data'].$secretKey;
+
+        return hash('sha512', $string);
+    }
 }
