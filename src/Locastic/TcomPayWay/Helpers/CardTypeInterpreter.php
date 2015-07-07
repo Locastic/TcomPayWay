@@ -19,7 +19,7 @@ class CardTypeInterpreter
         $pgwCardTypes = array(
             '1' => 'American Express',
             '2' => 'MasterCard',
-            '3' => 'Vise',
+            '3' => 'Visa',
             '4' => 'Diners',
             '5' => 'Maestro',
 

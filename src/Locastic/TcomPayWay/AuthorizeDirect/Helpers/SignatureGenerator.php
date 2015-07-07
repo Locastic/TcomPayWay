@@ -16,14 +16,13 @@ class SignatureGenerator
 
     /**
      * Based on payment model generates signature
-     *
-     * @param string  $secretKey
      * @param Payment $payment
      *
      * @return string
      */
-    public static function getSignature($secretKey, Payment $payment)
+    public static function generateSignature(Payment $payment)
     {
+        $secretKey = $payment->getSecretKey();
         $string = self::METHOD_NAME.$secretKey;
 
         $string .= $payment->getPgwShopId().$secretKey;
@@ -85,6 +84,92 @@ class SignatureGenerator
         $string .= $pgwResponse['pgw_trace_ref'].$secretKey;
         $string .= $pgwResponse['pgw_order_id'].$secretKey;
         $string .= $pgwResponse['pgw_merchant_data'].$secretKey;
+
+        return hash('sha512', $string);
+    }
+
+    /**
+     * @param Payment $payment
+     * @param int     $announcementDuration
+     * @return string
+     */
+    public static function generateAuthorizationAnnounceSignature(Payment $payment, $announcementDuration)
+    {
+        $secretKey = $payment->getSecretKey();
+
+        $string = 'authorization-announce'.$secretKey;
+        $string .= $payment->getPgwShopId().$secretKey;
+        $string .= $payment->getPgwOrderId().$secretKey;
+        $string .= $payment->getPgwAmount().$secretKey;
+        $string .= $payment->getPgwAuthorizationType().$secretKey;
+        $string .= $announcementDuration.$secretKey;
+
+        return hash('sha512', $string);
+    }
+
+    /**
+     * @param Payment $payment
+     * @param int     $pgwTransactionId
+     * @return string
+     */
+    public static function generateAuthorizationCompleteSignature(Payment $payment, $pgwTransactionId)
+    {
+        $secretKey = $payment->getSecretKey();
+
+        $string = 'authorization-complete'.$secretKey;
+        $string .= $payment->getPgwShopId().$secretKey;
+        $string .= $pgwTransactionId.$secretKey;
+        $string .= $payment->getPgwAmount().$secretKey;
+
+        return hash('sha512', $string);
+    }
+
+    /**
+     * @param Payment $payment
+     * @param int     $pgwTransactionId
+     * @return string
+     */
+    public static function generateAuthorizationCancelSignature(Payment $payment, $pgwTransactionId)
+    {
+        $secretKey = $payment->getSecretKey();
+
+        $string = 'authorization-cancel'.$secretKey;
+        $string .= $payment->getPgwShopId().$secretKey;
+        $string .= $pgwTransactionId.$secretKey;
+
+        return hash('sha512', $string);
+    }
+
+    /**
+     * @param Payment $payment
+     * @param int     $pgwTransactionId
+     * @return string
+     */
+    public static function generateAuthorizationRefundSignature(Payment $payment, $pgwTransactionId)
+    {
+        $secretKey = $payment->getSecretKey();
+
+        $string = 'authorization-refund'.$secretKey;
+        $string .= $payment->getPgwShopId().$secretKey;
+        $string .= $pgwTransactionId.$secretKey;
+        $string .= $payment->getPgwAmount().$secretKey;
+
+        return hash('sha512', $string);
+    }
+
+    /**
+     * @param Payment $payment
+     * @param int     $pgwTransactionId
+     * @return string
+     */
+    public static function generateAuthorizationInfoSignature(Payment $payment, $pgwTransactionId)
+    {
+        $secretKey = $payment->getSecretKey();
+
+        $string = 'authorization-info'.$secretKey;
+        $string .= $payment->getPgwShopId().$secretKey;
+        $string .= $pgwTransactionId.$secretKey;
+        $string .= $payment->getPgwOrderId().$secretKey;
 
         return hash('sha512', $string);
     }

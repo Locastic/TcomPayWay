@@ -164,6 +164,14 @@ class Payment
     /**
      * @return string
      */
+    public function getSecretKey()
+    {
+        return $this->secretKey;
+    }
+
+    /**
+     * @return string
+     */
     public function getPgwOrderId()
     {
         return $this->pgwOrderId;

@@ -70,7 +70,7 @@ class Payment extends BasePayment implements PaymentInterface
      */
     public function getPgwSignature()
     {
-        return SignatureGenerator::getSignature($this->secretKey, $this);
+        return SignatureGenerator::generateSignature($this);
     }
 
     /**

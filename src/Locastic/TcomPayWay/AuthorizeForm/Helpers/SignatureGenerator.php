@@ -17,13 +17,13 @@ class SignatureGenerator
     /**
      * Based on payment model generates signature
      *
-     * @param string  $secretKey
      * @param Payment $payment
      *
      * @return string
      */
-    public static function getSignature($secretKey, Payment $payment)
+    public static function generateSignature(Payment $payment)
     {
+        $secretKey = $payment->getSecretKey();
         $string = self::METHOD_NAME.$secretKey;
 
         $string .= $payment->getPgwShopId().$secretKey;
