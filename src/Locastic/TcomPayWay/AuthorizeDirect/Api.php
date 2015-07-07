@@ -35,7 +35,7 @@ class Api
 
     public function authorizationAnnounce($anounceDuration)
     {
-        $this->browser->post($this->apiLocation.'authorization-announce')
+        $this->browser->post($this->apiLocation.'authorization-announce');
     }
 
     private function getAuthorizationAnounceRequest(Payment $payment, $anounceDuration)
@@ -47,6 +47,6 @@ class Api
             'pgw_authorization_type' => ,
             'pgw_announcment_duration' => ,
             'pgw_signature' => ,
-        )
+        );
     }
 }
