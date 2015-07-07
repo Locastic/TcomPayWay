@@ -17,7 +17,7 @@ class SignatureGenerator
     /**
      * Based on payment model generates signature
      *
-     * @param string $secretKey
+     * @param string  $secretKey
      * @param Payment $payment
      *
      * @return string
@@ -47,7 +47,6 @@ class SignatureGenerator
         $string .= $payment->getPgwCountry().$secretKey;
         $string .= $payment->getPgwPhoneNumber().$secretKey;
         $string .= $payment->getPgwEmail().$secretKey;
-
         $string .= $payment->getPgwMerchantData().$secretKey;
 
         return hash('sha512', $string);
