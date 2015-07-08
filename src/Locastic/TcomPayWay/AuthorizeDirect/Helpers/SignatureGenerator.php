@@ -53,123 +53,20 @@ class SignatureGenerator
 
     /**
      * @param string $secretKey
-     * @param array  $pgwResponse
+     * @param array  $data
      * @return string
      */
-    public static function generatePaymentResponseSuccessSignature($secretKey, $pgwResponse)
+    public static function generateSignatureFromArray($secretKey, $data)
     {
         $string = '';
 
-        $string .= $pgwResponse['pgw_trace_ref'].$secretKey;
-        $string .= $pgwResponse['pgw_transaction_id'].$secretKey;
-        $string .= $pgwResponse['pgw_order_id'].$secretKey;
-        $string .= $pgwResponse['pgw_amount'].$secretKey;
-        $string .= $pgwResponse['pgw_installments'].$secretKey;
-        $string .= $pgwResponse['pgw_card_type_id'].$secretKey;
-        $string .= $pgwResponse['pgw_merchant_data'].$secretKey;
+        foreach ($data as $key => $value) {
+            if ('pgw_signature' == $key) {
+                continue;
+            }
 
-        return hash('sha512', $string);
-    }
-
-    /**
-     * @param string $secretKey
-     * @param array  $pgwResponse
-     * @return string
-     */
-    public static function generatePaymentResponseFailureSignature($secretKey, $pgwResponse)
-    {
-        $string = '';
-
-        $string .= $pgwResponse['pgw_result_code'].$secretKey;
-        $string .= $pgwResponse['pgw_trace_ref'].$secretKey;
-        $string .= $pgwResponse['pgw_order_id'].$secretKey;
-        $string .= $pgwResponse['pgw_merchant_data'].$secretKey;
-
-        return hash('sha512', $string);
-    }
-
-    /**
-     * @param Payment $payment
-     * @param int     $announcementDuration
-     * @return string
-     */
-    public static function generateAuthorizationAnnounceSignature(Payment $payment, $announcementDuration)
-    {
-        $secretKey = $payment->getSecretKey();
-
-        $string = 'authorization-announce'.$secretKey;
-        $string .= $payment->getPgwShopId().$secretKey;
-        $string .= $payment->getPgwOrderId().$secretKey;
-        $string .= $payment->getPgwAmount().$secretKey;
-        $string .= $payment->getPgwAuthorizationType().$secretKey;
-        $string .= $announcementDuration.$secretKey;
-
-        return hash('sha512', $string);
-    }
-
-    /**
-     * @param Payment $payment
-     * @param int     $pgwTransactionId
-     * @return string
-     */
-    public static function generateAuthorizationCompleteSignature(Payment $payment, $pgwTransactionId)
-    {
-        $secretKey = $payment->getSecretKey();
-
-        $string = 'authorization-complete'.$secretKey;
-        $string .= $payment->getPgwShopId().$secretKey;
-        $string .= $pgwTransactionId.$secretKey;
-        $string .= $payment->getPgwAmount().$secretKey;
-
-        return hash('sha512', $string);
-    }
-
-    /**
-     * @param Payment $payment
-     * @param int     $pgwTransactionId
-     * @return string
-     */
-    public static function generateAuthorizationCancelSignature(Payment $payment, $pgwTransactionId)
-    {
-        $secretKey = $payment->getSecretKey();
-
-        $string = 'authorization-cancel'.$secretKey;
-        $string .= $payment->getPgwShopId().$secretKey;
-        $string .= $pgwTransactionId.$secretKey;
-
-        return hash('sha512', $string);
-    }
-
-    /**
-     * @param Payment $payment
-     * @param int     $pgwTransactionId
-     * @return string
-     */
-    public static function generateAuthorizationRefundSignature(Payment $payment, $pgwTransactionId)
-    {
-        $secretKey = $payment->getSecretKey();
-
-        $string = 'authorization-refund'.$secretKey;
-        $string .= $payment->getPgwShopId().$secretKey;
-        $string .= $pgwTransactionId.$secretKey;
-        $string .= $payment->getPgwAmount().$secretKey;
-
-        return hash('sha512', $string);
-    }
-
-    /**
-     * @param Payment $payment
-     * @param int     $pgwTransactionId
-     * @return string
-     */
-    public static function generateAuthorizationInfoSignature(Payment $payment, $pgwTransactionId)
-    {
-        $secretKey = $payment->getSecretKey();
-
-        $string = 'authorization-info'.$secretKey;
-        $string .= $payment->getPgwShopId().$secretKey;
-        $string .= $pgwTransactionId.$secretKey;
-        $string .= $payment->getPgwOrderId().$secretKey;
+            $string .= $value.$secretKey;
+        }
 
         return hash('sha512', $string);
     }
