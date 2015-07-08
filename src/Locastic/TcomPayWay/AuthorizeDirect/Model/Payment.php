@@ -223,7 +223,7 @@ class Payment extends BasePayment implements PaymentInterface
      * @param array $pgwResponse
      * @return bool
      */
-    public function isPgwReponseValid($pgwResponse)
+    public function isPgwResponseValid($pgwResponse)
     {
         return $pgwResponse['pgw_signature'] == SignatureGenerator::generateSignatureFromArray(
             $this->secretKey,
