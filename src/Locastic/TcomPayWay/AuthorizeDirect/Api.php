@@ -91,7 +91,7 @@ class Api
             'pgw_announcement_duration' => $pgwAnnouncementDuration,
         );
 
-        $data['pgw_signature'] = SignatureGenerator::generateSignatureFromArray($data);
+        $data['pgw_signature'] = SignatureGenerator::generateSignatureFromArray($this->secretKey, $data);
 
         return $this->doRequest($data);
 
@@ -111,7 +111,7 @@ class Api
             'pgw_amount' => $pgwAmount,
         );
 
-        $data['pgw_signature'] = SignatureGenerator::generateSignatureFromArray($data);
+        $data['pgw_signature'] = SignatureGenerator::generateSignatureFromArray($this->secretKey, $data);
 
         return $this->doRequest($data);
     }
@@ -128,7 +128,7 @@ class Api
             'pgw_transaction_id' => $pgwTransactionId,
         );
 
-        $data['pgw_signature'] = SignatureGenerator::generateSignatureFromArray($data);
+        $data['pgw_signature'] = SignatureGenerator::generateSignatureFromArray($this->secretKey, $data);
 
         return $this->doRequest($data);
     }
@@ -147,7 +147,7 @@ class Api
             'pgw_transaction_id' => $pgwTransactionId,
         );
 
-        $data['pgw_signature'] = SignatureGenerator::generateSignatureFromArray($data);
+        $data['pgw_signature'] = SignatureGenerator::generateSignatureFromArray($this->secretKey, $data);
 
         return $this->doRequest($data);
     }
@@ -166,7 +166,7 @@ class Api
             'pgw_order_id' => $pgwOrderId,
         );
 
-        $data['pgw_signature'] = SignatureGenerator::generateSignatureFromArray($data);
+        $data['pgw_signature'] = SignatureGenerator::generateSignatureFromArray($this->secretKey, $data);
 
         return $this->doRequest($data);
     }
@@ -185,7 +185,7 @@ class Api
             'pgw_card_number' => $pgwCardNumber,
         );
 
-        $data['pgw_signature'] = SignatureGenerator::generateSignatureFromArray($data);
+        $data['pgw_signature'] = SignatureGenerator::generateSignatureFromArray($this->secretKey, $data);
 
         return $this->doRequest($data);
     }
