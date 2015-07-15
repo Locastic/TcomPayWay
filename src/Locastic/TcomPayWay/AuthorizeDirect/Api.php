@@ -3,6 +3,8 @@
 namespace Locastic\TcomPayWay\AuthorizeDirect;
 
 use Buzz\Browser;
+use Buzz\Client\Curl;
+use Buzz\Listener\BasicAuthListener;
 use Locastic\TcomPayWay\AuthorizeDirect\Helpers\SignatureGenerator;
 
 /**
@@ -39,19 +41,22 @@ class Api
     /**
      * @var array
      */
-    protected $headers = array(
-        'Content-Type' => 'application/x-www-form-urlencoded',
-        'Authorization' => 'Basic',
-    );
+    protected $headers;
 
     /**
+     * @param string    $username
+     * @param string    $password
      * @param int       $shopId
      * @param string    $secretKey
      * @param int       $authorizationType
      * @param bool|true $sandbox
      */
-    public function __construct($shopId, $secretKey, $authorizationType = 0, $sandbox = true)
+    public function __construct($username, $password, $shopId, $secretKey, $authorizationType = 0, $sandbox = true)
     {
+        if (false == is_string($username) or false == is_string($password)) {
+            throw new \LogicException('The username and password must be strings.');
+        }
+
         if (false == is_int($shopId)) {
             throw new \LogicException('The integer Shop ID option must be set.');
         }
@@ -64,14 +69,18 @@ class Api
             throw new \LogicException('The boolean sandbox option must be set.');
         }
 
-
         $this->shopId = $shopId;
         $this->secretKey = $secretKey;
         $this->authorizationType = $authorizationType;
         $this->sandbox = $sandbox;
         $this->apiLocation = $this->getApiEndpoint();
 
-        $this->browser = new Browser();
+        $this->browser = new Browser(new Curl());
+        $this->browser->addListener(new BasicAuthListener($username, $password));
+
+        $this->headers = array(
+            'Content-Type' => 'application/x-www-form-urlencoded',
+        );
     }
 
     /**
@@ -80,7 +89,7 @@ class Api
      * @param int    $pgwAnnouncementDuration
      * @return array
      */
-    public function authorizationAnnounce($pgwOrderId, $pgwAmount, $pgwAnnouncementDuration)
+    public function authorizationAnnounce($pgwOrderId, $pgwAmount, $pgwAnnouncementDuration = 60)
     {
         $data = array(
             'method' => 'authorization-announce',
@@ -173,7 +182,7 @@ class Api
 
     /**
      * @param int   $pgwAmount
-     * @param strin $pgwCardNumber
+     * @param string $pgwCardNumber
      * @return array
      */
     public function installments($pgwAmount, $pgwCardNumber)
@@ -199,7 +208,7 @@ class Api
         $result = $this->browser->post(
             $this->apiLocation.$data['method'],
             $this->headers,
-            json_encode($data)
+            $data
         );
 
         return json_decode($result->getContent());
