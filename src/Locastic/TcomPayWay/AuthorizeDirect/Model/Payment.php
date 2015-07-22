@@ -37,23 +37,24 @@ class Payment extends BasePayment implements PaymentInterface
 
 
     /**
-     * @param $pgwShopId
-     * @param $secretKey
-     * @param $pgwOrderId
-     * @param $pgwAmount
-     * @param $pgwAuthorizationType
-     * @param $pgwSuccessUrl
-     * @param $pgwFailureUrl
-     * @param $pgwCardNumber
-     * @param $pgwCardExpirationDate
-     * @param $pgwCardVerificationData
-     * @param $pgwFirstName
-     * @param $pgwLastName
-     * @param $pgwStreet
-     * @param $pgwCity
-     * @param $pgwPostCode
-     * @param $pgwCountry
-     * @param $pgwEmail
+     * @param int $pgwShopId
+     * @param string $secretKey
+     * @param string $pgwOrderId
+     * @param string $pgwAmount
+     * @param string $pgwAuthorizationType
+     * @param string $pgwSuccessUrl
+     * @param string $pgwFailureUrl
+     * @param string $pgwCardNumber
+     * @param string $pgwCardExpirationDate
+     * @param string $pgwCardVerificationData
+     * @param string $pgwFirstName
+     * @param string $pgwLastName
+     * @param string $pgwStreet
+     * @param string $pgwCity
+     * @param string $pgwPostCode
+     * @param string $pgwCountry
+     * @param string $pgwEmail
+     * @param bool|true $testMode
      */
     public function __construct(
         $pgwShopId,

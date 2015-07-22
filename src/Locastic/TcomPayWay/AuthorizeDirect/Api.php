@@ -103,7 +103,6 @@ class Api
         $data['pgw_signature'] = SignatureGenerator::generateSignatureFromArray($this->secretKey, $data);
 
         return $this->doRequest($data);
-
     }
 
     /**
@@ -181,7 +180,7 @@ class Api
     }
 
     /**
-     * @param int   $pgwAmount
+     * @param int    $pgwAmount
      * @param string $pgwCardNumber
      * @return array
      */
