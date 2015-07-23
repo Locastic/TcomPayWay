@@ -84,4 +84,16 @@ class Payment extends BasePayment implements PaymentInterface
 
         return 'https://pgw.ht.hr/services/payment/api/authorize-form';
     }
+
+    /**
+     * @param array $pgwResponse
+     * @return bool
+     */
+    public function isPgwResponseValid($pgwResponse)
+    {
+        return $pgwResponse['pgw_signature'] == SignatureGenerator::generateSignatureFromArray(
+            $this->secretKey,
+            $pgwResponse
+        );
+    }
 }

@@ -50,4 +50,24 @@ class SignatureGenerator
 
         return hash('sha512', $string);
     }
+
+    /**
+     * @param string $secretKey
+     * @param array  $data
+     * @return string
+     */
+    public static function generateSignatureFromArray($secretKey, $data)
+    {
+        $string = '';
+
+        foreach ($data as $key => $value) {
+            if ('pgw_signature' == $key) {
+                continue;
+            }
+
+            $string .= $value.$secretKey;
+        }
+
+        return hash('sha512', $string);
+    }
 }
