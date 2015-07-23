@@ -127,7 +127,7 @@ class Payment
     /**
      * @var boolean
      */
-    protected $testMode;
+    protected $sandbox;
 
     /**
      * @return string

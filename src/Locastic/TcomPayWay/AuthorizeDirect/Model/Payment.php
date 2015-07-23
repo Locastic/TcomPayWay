@@ -54,7 +54,7 @@ class Payment extends BasePayment implements PaymentInterface
      * @param string $pgwPostCode
      * @param string $pgwCountry
      * @param string $pgwEmail
-     * @param bool|true $testMode
+     * @param bool|true $sandbox
      */
     public function __construct(
         $pgwShopId,
@@ -74,7 +74,7 @@ class Payment extends BasePayment implements PaymentInterface
         $pgwPostCode,
         $pgwCountry,
         $pgwEmail,
-        $testMode = true
+        $sandbox = true
     ) {
         $this->pgwShopId = $pgwShopId;
         $this->secretKey = $secretKey;
@@ -93,7 +93,7 @@ class Payment extends BasePayment implements PaymentInterface
         $this->setPgwCity($pgwCity);
         $this->setPgwCountry($pgwCountry);
         $this->setPgwEmail($pgwEmail);
-        $this->testMode = $testMode;
+        $this->sandbox = $sandbox;
     }
 
     /**
@@ -213,7 +213,7 @@ class Payment extends BasePayment implements PaymentInterface
      */
     public function getApiEndPoint()
     {
-        if ($this->testMode) {
+        if ($this->sandbox) {
             return 'https://pgwtest.ht.hr/services/payment/api/authorize-direct';
         }
 

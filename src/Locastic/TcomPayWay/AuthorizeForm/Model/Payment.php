@@ -27,7 +27,7 @@ class Payment extends BasePayment implements PaymentInterface
      * @param string  $pgwAuthorizationType
      * @param string  $pgwSuccessUrl
      * @param string  $pgwFailureUrl
-     * @param boolean $testMode
+     * @param boolean $sandbox
      */
     public function __construct(
         $pgwShopId,
@@ -46,7 +46,7 @@ class Payment extends BasePayment implements PaymentInterface
         $this->pgwAuthorizationType = $pgwAuthorizationType;
         $this->pgwSuccessUrl = $pgwSuccessUrl;
         $this->pgwFailureUrl = $pgwFailureUrl;
-        $this->testMode = $testMode;
+        $this->sandbox = $sandbox;
     }
 
     /**
@@ -78,7 +78,7 @@ class Payment extends BasePayment implements PaymentInterface
      */
     public function getApiEndPoint()
     {
-        if ($this->testMode) {
+        if ($this->sandbox) {
             return 'https://pgwtest.ht.hr/services/payment/api/authorize-form';
         }
 
