@@ -37,7 +37,7 @@ class Payment extends BasePayment implements PaymentInterface
         $pgwAuthorizationType,
         $pgwSuccessUrl,
         $pgwFailureUrl,
-        $testMode = true
+        $sandbox = true
     ) {
         $this->pgwShopId = $pgwShopId;
         $this->secretKey = $secretKey;
