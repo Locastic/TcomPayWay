@@ -96,4 +96,16 @@ class Payment extends BasePayment implements PaymentInterface
             $pgwResponse
         );
     }
+
+    /**
+     * @param array $pgwResponse
+     * @return bool
+     */
+    public function isPgwOrderedResponseValid($pgwResponse)
+    {
+        return $pgwResponse['pgw_signature'] == SignatureGenerator::generateOrderedSignatureFromArray(
+            $this->secretKey,
+            $pgwResponse
+        );
+    }
 }
