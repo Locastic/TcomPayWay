@@ -70,4 +70,22 @@ class SignatureGenerator
 
         return hash('sha512', $string);
     }
+
+    /**
+     * @param string $secretKey
+     * @param array  $data
+     * @return string
+     */
+    public static function generateOrderedSignatureFromArray($secretKey, $data)
+    {
+        $string = $data['pgw_trace_ref'].$secretKey;
+        $string .= $data['pgw_transaction_id'].$secretKey;
+        $string .= $data['pgw_order_id'].$secretKey;
+        $string .= $data['pgw_amount'].$secretKey;
+        $string .= $data['pgw_installments'].$secretKey;
+        $string .= $data['pgw_card_type_id'].$secretKey;
+        $string .= $data['pgw_merchant_data'].$secretKey;
+
+        return hash('sha512', $string);
+    }
 }

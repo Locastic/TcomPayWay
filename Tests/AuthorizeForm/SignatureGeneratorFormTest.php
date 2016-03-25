@@ -49,4 +49,23 @@ class SignatureGeneratorFormTest extends PHPUnit_Framework_TestCase
             SignatureGenerator::generateSignature($payment)
         );
     }
+
+    public function testGetOrderedResponseSignature()
+    {
+        
+        $response = [
+            'pgw_amount' => '6789',
+            'pgw_card_type_id' => '3',
+            'pgw_installments' => '0',
+            'pgw_merchant_data' => '',
+            'pgw_order_id' => 'test1',
+            'pgw_trace_ref' => '123456789',
+            'pgw_transaction_id' => '12455',
+        ];
+        
+        $this->assertEquals(
+            '1c98b942b75b0fe931c6240af81f1c2105f8285d0a7284d85f9d740fe5801089e7ab66cd572e8e871c4a803bf89cb3a9ffebd52b27521da58b851b87ca2e7742',
+            SignatureGenerator::generateOrderedSignatureFromArray('12345', $response)
+        );
+    }
 }
