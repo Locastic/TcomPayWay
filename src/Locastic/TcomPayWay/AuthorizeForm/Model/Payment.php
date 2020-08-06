@@ -20,13 +20,13 @@ class Payment extends BasePayment implements PaymentInterface
     private $pgwDisableInstallments;
 
     /**
-     * @param string  $pgwShopId
-     * @param string  $secretKey
-     * @param string  $pgwOrderId
-     * @param string  $pgwAmount
-     * @param string  $pgwAuthorizationType
-     * @param string  $pgwSuccessUrl
-     * @param string  $pgwFailureUrl
+     * @param string $pgwShopId
+     * @param string $secretKey
+     * @param string $pgwOrderId
+     * @param string $pgwAmount
+     * @param string $pgwAuthorizationType
+     * @param string $pgwSuccessUrl
+     * @param string $pgwFailureUrl
      * @param boolean $sandbox
      */
     public function __construct(
@@ -39,14 +39,14 @@ class Payment extends BasePayment implements PaymentInterface
         $pgwFailureUrl,
         $sandbox = true
     ) {
-        $this->pgwShopId = $pgwShopId;
-        $this->secretKey = $secretKey;
-        $this->pgwOrderId = $pgwOrderId;
-        $this->pgwAmount = $pgwAmount;
+        $this->pgwShopId            = $pgwShopId;
+        $this->secretKey            = $secretKey;
+        $this->pgwOrderId           = $pgwOrderId;
+        $this->pgwAmount            = $pgwAmount;
         $this->pgwAuthorizationType = $pgwAuthorizationType;
-        $this->pgwSuccessUrl = $pgwSuccessUrl;
-        $this->pgwFailureUrl = $pgwFailureUrl;
-        $this->sandbox = $sandbox;
+        $this->pgwSuccessUrl        = $pgwSuccessUrl;
+        $this->pgwFailureUrl        = $pgwFailureUrl;
+        $this->sandbox              = $sandbox;
     }
 
     /**
@@ -79,33 +79,34 @@ class Payment extends BasePayment implements PaymentInterface
     public function getApiEndPoint()
     {
         if ($this->sandbox) {
-            return 'https://pgwtest.ht.hr/services/payment/api/authorize-form';
+            return 'https://formtest.payway.com.hr/authorization.aspx';
         }
 
-        return 'https://pgw.ht.hr/services/payment/api/authorize-form';
+        return 'https://form.payway.com.hr/authorization.aspx';
     }
 
     /**
      * @param array $pgwResponse
+     *
      * @return bool
      */
     public function isPgwResponseValid($pgwResponse)
     {
-        return $pgwResponse['pgw_signature'] == SignatureGenerator::generateSignatureFromArray(
-            $this->secretKey,
-            $pgwResponse
-        );
+        $string = $this->getPgwShopId().$this->getSecretKey().$this->getPgwOrderId().$this->getSecretKey().$pgwResponse['Success'].$this->getSecretKey().$pgwResponse['ApprovalCode'].$this->secretKey();
+
+        return $pgwResponse['Signature'] == hash('sha512', $string);
     }
 
     /**
      * @param array $pgwResponse
+     *
      * @return bool
      */
     public function isPgwOrderedResponseValid($pgwResponse)
     {
         return $pgwResponse['pgw_signature'] == SignatureGenerator::generateOrderedSignatureFromArray(
-            $this->secretKey,
-            $pgwResponse
-        );
+                $this->secretKey,
+                $pgwResponse
+            );
     }
 }
