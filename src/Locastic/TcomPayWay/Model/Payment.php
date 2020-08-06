@@ -194,6 +194,14 @@ class Payment
     }
 
     /**
+     * @return float
+     */
+    public function getPgwAmountFloat()
+    {
+        return number_format($this->pgwAmount / 100, 2);
+    }
+
+    /**
      * @param int $pgwAmount
      */
     public function setPgwAmount($pgwAmount)
