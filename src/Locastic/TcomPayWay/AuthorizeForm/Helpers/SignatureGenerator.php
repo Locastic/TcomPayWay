@@ -23,37 +23,40 @@ class SignatureGenerator
      */
     public static function generateSignature(Payment $payment)
     {
-        $secretKey = $payment->getSecretKey();
-        $string = self::METHOD_NAME.$secretKey;
+//        $secretKey = $payment->getSecretKey();
+//        $string = self::METHOD_NAME.$secretKey;
+//
+//        $string .= $payment->getPgwShopId().$secretKey;
+//        $string .= $payment->getPgwOrderId().$secretKey;
+//        $string .= $payment->getPgwAmount().$secretKey;
+//        $string .= $payment->getPgwAuthorizationType().$secretKey;
+//        $string .= $payment->getPgwAuthorizationToken().$secretKey;
+//        $string .= $payment->getPgwLanguage().$secretKey;
+//        $string .= $payment->getPgwReturnMethod().$secretKey;
+//        $string .= $payment->getPgwSuccessUrl().$secretKey;
+//        $string .= $payment->getPgwFailureUrl().$secretKey;
+//        $string .= $payment->getPgwFirstName().$secretKey;
+//        $string .= $payment->getPgwLastName().$secretKey;
+//        $string .= $payment->getPgwStreet().$secretKey;
+//        $string .= $payment->getPgwCity().$secretKey;
+//        $string .= $payment->getPgwPostCode().$secretKey;
+//        $string .= $payment->getPgwCountry().$secretKey;
+//        $string .= $payment->getPgwPhoneNumber().$secretKey;
+//        $string .= $payment->getPgwEmail().$secretKey;
+//        $string .= $payment->getPgwmerchantData().$secretKey;
+//        $string .= $payment->getPgwOrderInfo().$secretKey;
+//        $string .= $payment->getPgwOrderItems().$secretKey;
+//        $string .= $payment->getPgwDisableInstallments().$secretKey;
 
-        $string .= $payment->getPgwShopId().$secretKey;
-        $string .= $payment->getPgwOrderId().$secretKey;
-        $string .= $payment->getPgwAmount().$secretKey;
-        $string .= $payment->getPgwAuthorizationType().$secretKey;
-        $string .= $payment->getPgwAuthorizationToken().$secretKey;
-        $string .= $payment->getPgwLanguage().$secretKey;
-        $string .= $payment->getPgwReturnMethod().$secretKey;
-        $string .= $payment->getPgwSuccessUrl().$secretKey;
-        $string .= $payment->getPgwFailureUrl().$secretKey;
-        $string .= $payment->getPgwFirstName().$secretKey;
-        $string .= $payment->getPgwLastName().$secretKey;
-        $string .= $payment->getPgwStreet().$secretKey;
-        $string .= $payment->getPgwCity().$secretKey;
-        $string .= $payment->getPgwPostCode().$secretKey;
-        $string .= $payment->getPgwCountry().$secretKey;
-        $string .= $payment->getPgwPhoneNumber().$secretKey;
-        $string .= $payment->getPgwEmail().$secretKey;
-        $string .= $payment->getPgwmerchantData().$secretKey;
-        $string .= $payment->getPgwOrderInfo().$secretKey;
-        $string .= $payment->getPgwOrderItems().$secretKey;
-        $string .= $payment->getPgwDisableInstallments().$secretKey;
+        $string = $payment->getPgwShopId().$payment->getSecretKey().$payment->getPgwOrderId().$payment->getPgwAmount();
 
         return hash('sha512', $string);
     }
 
     /**
      * @param string $secretKey
-     * @param array  $data
+     * @param array $data
+     *
      * @return string
      */
     public static function generateSignatureFromArray($secretKey, $data)
@@ -73,7 +76,8 @@ class SignatureGenerator
 
     /**
      * @param string $secretKey
-     * @param array  $data
+     * @param array $data
+     *
      * @return string
      */
     public static function generateOrderedSignatureFromArray($secretKey, $data)

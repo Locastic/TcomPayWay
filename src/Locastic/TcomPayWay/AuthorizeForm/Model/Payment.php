@@ -92,10 +92,9 @@ class Payment extends BasePayment implements PaymentInterface
      */
     public function isPgwResponseValid($pgwResponse)
     {
-        return $pgwResponse['pgw_signature'] == SignatureGenerator::generateSignatureFromArray(
-                $this->secretKey,
-                $pgwResponse
-            );
+        $string = $this->getPgwShopId().$this->getSecretKey().$this->getPgwOrderId().$this->getSecretKey().$pgwResponse['Success'].$this->getSecretKey().$pgwResponse['ApprovalCode'].$this->secretKey();
+
+        return $pgwResponse['Signature'] == hash('sha512', $string);
     }
 
     /**
