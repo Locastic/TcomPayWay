@@ -198,7 +198,7 @@ class Payment
      */
     public function getPgwAmountFloat()
     {
-        return number_format($this->pgwAmount / 100, 2);
+        return number_format($this->pgwAmount / 100, 2, ',', '');
     }
 
     /**
