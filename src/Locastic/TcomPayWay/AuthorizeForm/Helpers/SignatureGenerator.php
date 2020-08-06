@@ -48,7 +48,7 @@ class SignatureGenerator
 //        $string .= $payment->getPgwOrderItems().$secretKey;
 //        $string .= $payment->getPgwDisableInstallments().$secretKey;
 
-        $string = $payment->getPgwShopId().$payment->getSecretKey().$payment->getPgwOrderId().$payment->getPgwAmount();
+        $string = $payment->getPgwShopId().$payment->getSecretKey().$payment->getPgwOrderId().$payment->getSecretKey().$payment->getPgwAmount().$payment->getSecretKey();
 
         return hash('sha512', $string);
     }
